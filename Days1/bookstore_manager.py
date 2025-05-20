@@ -10,7 +10,7 @@ books = [
 ]
 
 # Thông tin khách hàng
-customer_name = "Nguyen Van A"
+customer_name = "Rin Master"
 customer_type = "VIP"
 
 def calculate_bill(book_name, quantity, customer_type):
@@ -37,11 +37,9 @@ def calculate_bill(book_name, quantity, customer_type):
     # Calculate total
     total = book["price"] * quantity
     
-    # Apply VIP discount
     if customer_type == "VIP":
         total *= 0.9  # 10% discount
     
-    # Check stock
     if book["stock"] == 0:
         return (total, "Hết hàng")
     elif book["stock"] < quantity:
@@ -72,7 +70,6 @@ def check_stock(book_name, quantity):
     elif book["stock"] < quantity:
         return (False, "Hết hàng hoặc không đủ", "")
     else:
-        # Classify by price
         price = book["price"]
         if price < 50000:
             category = "Sách giá rẻ"
@@ -83,20 +80,17 @@ def check_stock(book_name, quantity):
             
         return (True, "Còn hàng", category)
 
-# Lambda function to generate discount code
+
 generate_discount_code = lambda name, c_type: name.upper() + "_VIP" if c_type == "VIP" else name.upper() + "_REG"
 
-# Function to find popular books
 def find_popular_books():
     """In sách bán chạy (số lượng bán > 10) và tìm sách bán chạy nhất"""
     print("Sách bán chạy (số lượng bán > 10):")
-    
-    # Using for loop to find popular books
+
     for book in books:
         if book["sold"] > 10:
             print(f"- {book['name']}: {book['sold']} cuốn")
     
-    # Using while loop to find the bestseller
     if books:
         max_sold = 0
         bestseller = None
@@ -111,20 +105,19 @@ def find_popular_books():
         if bestseller:
             print(f"\nSách bán chạy nhất: {bestseller['name']} ({bestseller['sold']} cuốn)")
 
-# Main function
 def main():
     """Thực thi chương trình chính"""
-    # Example usage
+    
     book_name = "Python Programming"
     quantity = 2
     
-    # Calculate bill example
+   
     total, status = calculate_bill(book_name, quantity, customer_type)
     print(f"\nHóa đơn cho {book_name}:")
     print(f"- Số lượng: {quantity}")
     print(f"- Tổng tiền: {total:,.0f} VNĐ")
     print(f"- Trạng thái: {status}")
-    
+        
     book_to_check = "Algorithms"
     check_qty = 1
     has_stock, message, category = check_stock(book_to_check, check_qty)

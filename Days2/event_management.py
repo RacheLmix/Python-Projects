@@ -1,6 +1,6 @@
 import numpy as np
 
-# Initialize sample data
+
 events = [
     {"id": "EV001", "name": "Hội chợ sách", "ticket_price": 50000.0, "tickets_left": 200},
     {"id": "EV002", "name": "Triển lãm nghệ thuật", "ticket_price": 75000.0, "tickets_left": 150},
@@ -15,10 +15,9 @@ sponsors = {
     "SP003": ("Công ty C", 4000000.0)
 }
 
-# Set to track events with sold tickets
+
 events_with_sales = set()
 
-# List to store ticket sales history
 ticket_history = []
 
 def manage_events():
@@ -110,7 +109,7 @@ def manage_events():
                 print(f"{e['id']}: {e['name']} - Giá vé: {e['ticket_price']:,.0f} VNĐ - Còn lại: {e['tickets_left']} vé")
                 
         elif choice == "6":
-            # Calculate average ticket price
+         
             prices = np.array([e['ticket_price'] for e in events])
             avg_price = np.mean(prices)
             print(f"Giá vé trung bình: {avg_price:,.0f} VNĐ")
@@ -275,7 +274,7 @@ def process_tickets():
                 print(f"Mã vé: {transaction['ticket_id']} - Sự kiện: {transaction['event_id']} - Số lượng: {transaction['quantity']}")
                 
         elif choice == "4":
-            # Remove invalid transactions
+            
             removed = 0
             for i in range(len(ticket_history)-1, -1, -1):
                 if ticket_history[i]['quantity'] == 0:
