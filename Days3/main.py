@@ -1,51 +1,48 @@
-from book_management import Book, PhysicalBook, EBook, display_books
-from library_management import User, Library
+# main.py
+from book_management import PhysicalBook, EBook, display_books
+from library_management import Library, User
 
 
 def main():
-    # Create library instance
+    # Tạo sách
+    b1 = PhysicalBook("B001", "Python 101", "John Doe", 5, "mới")
+    b2 = PhysicalBook("B002", "OOP in Java", "Jane Doe", 2, "cũ")
+    b3 = PhysicalBook("B003", "Data Structures", "Alice", 3, "mới")
+    e1 = EBook("E001", "Machine Learning", "Bob", 10, "PDF")
+    e2 = EBook("E002", "AI Basics", "Charlie", 4, "EPUB")
+
+    # Thêm sách vào thư viện
     library = Library()
-
-    # Add books to library
-    books = [
-        PhysicalBook("PB001", "Python Crash Course", "Eric Matthes", 5, "New"),
-        PhysicalBook("PB002", "Clean Code", "Robert C. Martin", 3, "Used"),
-        PhysicalBook("PB003", "Design Patterns", "Erich Gamma", 2, "New"),
-        EBook("EB001", "Fluent Python", "Luciano Ramalho", 10, "PDF"),
-        EBook("EB002", "Effective Python", "Brett Slatkin", 7, "EPUB")
-    ]
-
-    for book in books:
+    for book in [b1, b2, b3, e1, e2]:
         library.add_book(book)
 
-    # Create users
-    users = [
-        User("U001", "Alice"),
-        User("U002", "Bob")
-    ]
+    # Tạo người dùng
+    user1 = User("U001", "Minh")
+    user2 = User("U002", "Lan")
 
-    # Simulate borrowing books
-    users[0].borrow_book("PB001")
-    users[0].borrow_book("EB001")
-    users[1].borrow_book("PB002")
-    users[1].borrow_book("EB002")
+    # Người dùng mượn sách
+    user1.borrow_book(b1)
+    user1.borrow_book(e1)
 
-    # Simulate returning a book
-    users[0].return_book("PB001")
+    user2.borrow_book(b2)
+    user2.borrow_book(e2)
 
-    # Display all books using iterator
-    print("\nAll books in library:")
+    # Trả lại sách
+    user1.return_book(b1)
+
+    # In thông tin sách bằng iterator
+    print("\n--- Danh sách sách trong thư viện ---")
     for book in library:
         print(book.get_info())
 
-    # Demonstrate polymorphism
-    print("\nDisplaying books using polymorphism:")
-    display_books(books)
+    # Thể hiện đa hình
+    print("\n--- Hiển thị thông tin sách (đa hình) ---")
+    display_books(library.books)
 
-    # Show borrowed books for each user
-    print("\nBorrowed books:")
-    for user in users:
-        print(f"{user.name}: {user.get_borrowed_books()}")
+    # In danh sách sách đang mượn
+    print("\n--- Sách đang được mượn ---")
+    print(f"{user1.name}: {user1.get_borrowed_books()}")
+    print(f"{user2.name}: {user2.get_borrowed_books()}")
 
 
 if __name__ == "__main__":
