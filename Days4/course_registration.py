@@ -37,18 +37,10 @@ class CourseRegistration:
         base_price = self.courses[course_code]
         total = base_price * quantity
         
-        if promo_code in self.discounts:
+        if promo_code and promo_code in self.discounts:
             total *= (1 - self.discounts[promo_code])
             
         return round(total, 2)
-
-    def save_registration(self, filename: str, data: dict) -> None:
-        """Lưu thông tin đăng ký vào file JSON"""
-        try:
-            with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=4)
-        except Exception as e:
-            raise IOError(f"Lỗi khi lưu file: {str(e)}")
 
     def load_registrations(self, filename: str) -> list:
         """Đọc thông tin đăng ký từ file JSON"""
@@ -59,6 +51,16 @@ class CourseRegistration:
             return []
         except Exception as e:
             raise IOError(f"Lỗi khi đọc file: {str(e)}")
+
+    def save_registration(self, filename: str, data: dict) -> None:
+        """Lưu thông tin đăng ký vào danh sách JSON"""
+        try:
+            registrations = self.load_registrations(filename)
+            registrations.append(data)  # Thêm bản ghi mới vào danh sách
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(registrations, f, ensure_ascii=False, indent=4)
+        except Exception as e:
+            raise IOError(f"Lỗi khi lưu file: {str(e)}")
 
 def main():
     registration = CourseRegistration()
